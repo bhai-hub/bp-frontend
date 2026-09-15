@@ -1,0 +1,477 @@
+:root {
+  --primary-blue: #1d4ed8;
+  --primary-hover: #1e40af;
+  --secondary-surface: #f1f5f9;
+  --body-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --success-color: #15803d;
+  --warning-color: #b45309;
+  --danger-color: #b91c1c;
+
+  /* Tasteful Enterprise Radius Tokens */
+  --bs-border-radius: 6px;
+  --bs-border-radius-sm: 4px;
+  --bs-border-radius-lg: 10px;
+  --bs-border-radius-pill: 50rem;
+}
+
+body {
+  background-color: var(--body-bg);
+  color: var(--text-dark);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Enterprise Header & Navigation */
+.enterprise-navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+}
+
+.brand-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--primary-blue);
+  font-size: 1.25rem;
+}
+
+.brand-icon-box {
+  width: 34px;
+  height: 34px;
+  background-color: var(--primary-blue);
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rounded Enterprise Cards */
+.enterprise-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.enterprise-card-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+/* Rounded Buttons */
+.btn {
+  border-radius: 6px !important;
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  color: #ffffff !important;
+  padding: 0.5rem 1rem;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-blue) !important;
+  color: #ffffff !important;
+}
+
+/* Rounded Form Controls */
+.form-control,
+.form-select {
+  border-radius: 6px !important;
+  border: 1px solid #cbd5e1;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+/* Rounded Alerts */
+.alert {
+  border-radius: 6px !important;
+}
+
+/* Rounded Modals */
+.modal-content {
+  border-radius: 10px !important;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tables */
+.enterprise-table {
+  width: 100%;
+  margin-bottom: 0;
+  border-collapse: collapse;
+}
+
+.enterprise-table th {
+  background-color: #f8fafc;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.enterprise-table td {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.875rem;
+}
+
+.enterprise-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Rounded Stat / Metric Widget */
+.metric-box {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.metric-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* Sidebar Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid var(--border-color);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  margin: 0.15rem 0.75rem;
+  color: #334155;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-nav-item:hover {
+  background-color: #f1f5f9;
+  color: var(--text-dark);
+}
+
+.sidebar-nav-item.active {
+  background-color: #eff6ff;
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+.dashboard-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--body-bg);
+  overflow-x: hidden;
+}
+
+.dashboard-topbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+}
+
+/* Rounded Status Badges / Pills */
+.enterprise-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 20px !important;
+  border: 1px solid transparent;
+}
+
+.enterprise-badge-active {
+  background-color: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+
+.enterprise-badge-inactive {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.enterprise-badge-blue {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+/* ========================================
+   ENTERPRISE ERROR PAGE DESIGN SYSTEM
+   Professional EMS / HR SaaS Aesthetics
+   ======================================== */
+
+.error-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 2rem 1rem;
+}
+
+.error-card {
+  width: 100%;
+  max-width: 640px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  padding: 2.75rem 2.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.error-brand-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+  color: var(--text-dark);
+}
+
+.error-brand-mark {
+  width: 28px;
+  height: 28px;
+  background-color: var(--primary-blue);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-brand-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+}
+
+.error-status-code {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #334155;
+  margin-bottom: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.error-icon-box {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1.5rem auto;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  color: #475569;
+}
+
+.error-icon-box.icon-warning {
+  color: #b45309;
+  background-color: #fffbeb;
+  border-color: #fde68a;
+}
+
+.error-icon-box.icon-danger {
+  color: #b91c1c;
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.error-icon-box.icon-info {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.error-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.error-message {
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto 1.75rem auto;
+}
+
+.error-role-notice {
+  font-size: 0.85rem;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  color: #475569;
+  margin-bottom: 1.75rem;
+  display: inline-block;
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.error-actions .btn {
+  min-width: 140px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+.error-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.error-reference-code {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  color: #475569;
+}
+
+/* Accessible visible focus styles */
+.error-actions .btn:focus-visible,
+.error-brand-header:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 576px) {
+  .error-card {
+    padding: 2rem 1.25rem;
+  }
+
+  .error-status-code {
+    font-size: 4rem;
+  }
+
+  .error-title {
+    font-size: 1.25rem;
+  }
+
+  .error-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .error-actions .btn {
+    width: 100%;
+  }
+}
+

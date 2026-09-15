@@ -1,0 +1,213 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../context/AuthContext';
+import { OnboardingWizard } from '../../../components/onboarding/OnboardingWizard';
+import api from '../../../lib/api';
+
+export default function OnboardingProfilePage() {
+  const { user, isLoading, refreshUser, logout } = useAuth();
+  const router = useRouter();
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    department: '',
+    designation: '',
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.replace('/login');
+      return;
+    }
+
+    if (user) {
+      setFormData({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        department: user.employee?.department || '',
+        designation: user.employee?.designation || '',
+      });
+    }
+  }, [user, isLoading, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+
+    try {
+      const res = await api.post('/onboarding/profile', formData);
+      if (res.data.success) {
+        await refreshUser();
+        router.push('/onboarding/ikigai');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to update profile details. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-vh-100 d-flex justify-content-center align-items-center" style={{ backgroundColor: '#f8fafc' }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
+      <div className="container" style={{ maxWidth: '800px' }}>
+        {/* Header & Signout */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex align-items-center gap-2">
+            <div className="p-2 bg-primary text-white rounded">
+              <i className="bi bi-award-fill fs-5"></i>
+            </div>
+            <div>
+              <h5 className="fw-bold text-dark mb-0">Brownie Points</h5>
+              <span className="text-muted small">Employee Onboarding</span>
+            </div>
+          </div>
+          <button onClick={logout} className="btn btn-outline-secondary btn-sm">
+            <i className="bi bi-box-arrow-right me-1"></i> Sign Out
+          </button>
+        </div>
+
+        {/* Stepper */}
+        <OnboardingWizard currentStep={2} />
+
+        <div className="enterprise-card">
+          <div className="enterprise-card-header d-flex justify-content-between align-items-center">
+            <span className="fw-bold">Step 2: Confirm Employee Profile Details</span>
+            <span className="badge bg-primary-subtle text-primary border border-primary-subtle">
+              ID: {user?.employee?.employeeCode || 'PENDING'}
+            </span>
+          </div>
+
+          <div className="p-4 p-md-5">
+            <p className="text-muted small mb-4">
+              Please verify and finalize your enterprise profile details. This information identifies your recognition awards and internal career milestone tracking.
+            </p>
+
+            {error && (
+              <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
+                <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className="row g-3 mb-3">
+                <div className="col-md-6">
+                  <label className="form-label small fw-semibold text-muted text-uppercase">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label small fw-semibold text-muted text-uppercase">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label small fw-semibold text-muted text-uppercase">
+                  Corporate Email
+                </label>
+                <input
+                  type="email"
+                  className="form-control bg-light"
+                  value={user?.email || ''}
+                  disabled
+                  readOnly
+                />
+                <div className="form-text" style={{ fontSize: '0.75rem' }}>
+                  Managed by your organization administrator.
+                </div>
+              </div>
+
+              <div className="row g-3 mb-4">
+                <div className="col-md-6">
+                  <label className="form-label small fw-semibold text-muted text-uppercase">
+                    Department
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="e.g. Engineering, Sales, Operations"
+                    value={formData.department}
+                    onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label small fw-semibold text-muted text-uppercase">
+                    Designation / Title
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="e.g. Senior Software Engineer"
+                    value={formData.designation}
+                    onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="p-3 bg-light border mb-4">
+                <div className="d-flex align-items-start gap-2">
+                  <i className="bi bi-shield-check text-primary fs-5 mt-1"></i>
+                  <div className="small text-muted">
+                    <strong className="text-dark d-block">Corporate Wallet Initialization</strong>
+                    Your employee Brownie Points wallet will be registered under this profile. Spendable and loyalty point allocations will reflect this verified identity.
+                  </div>
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-end gap-2">
+                <button type="submit" className="btn btn-primary" disabled={submitting}>
+                  {submitting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2"></span>
+                      Saving Profile...
+                    </>
+                  ) : (
+                    <>
+                      Confirm &amp; Proceed to Ikigai Reflections <i className="bi bi-arrow-right ms-1"></i>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

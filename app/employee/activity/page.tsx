@@ -41,7 +41,7 @@ export default function EmployeeActivityPage() {
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -50,17 +50,19 @@ export default function EmployeeActivityPage() {
             <table className="enterprise-table">
               <thead>
                 <tr>
-                  <th>Date & Time</th>
-                  <th>Award Description & Recognition Rationale</th>
-                  <th>Ledger Reference</th>
-                  <th className="text-end">Points Awarded</th>
+                  <th scope="col">Date & Time</th>
+                  <th scope="col">Award Description & Recognition Rationale</th>
+                  <th scope="col">Ledger Reference</th>
+                  <th scope="col" className="text-end">Points Awarded</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td colSpan={4} className="text-center py-4">
-                      <div className="spinner-border spinner-border-sm text-primary me-2"></div>
+                      <div className="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span className="visually-hidden">Loading personal activity...</span>
+                      </div>
                       Loading personal activity...
                     </td>
                   </tr>

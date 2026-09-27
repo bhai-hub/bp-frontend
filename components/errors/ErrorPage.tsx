@@ -141,11 +141,11 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
   };
 
   return (
-    <main className="error-page-wrapper" role="main">
+    <main id="main-content" tabIndex={-1} className="error-page-wrapper" role="main">
       <div className="error-card">
         {/* Subtle Brand Header */}
-        <Link href="/" className="error-brand-header" title="Brownie Points Home">
-          <div className="error-brand-mark">BP</div>
+        <Link href="/" className="error-brand-header" title="Brownie Points Home" aria-label="Brownie Points Homepage">
+          <div className="error-brand-mark" aria-hidden="true">BP</div>
           <span className="error-brand-name">Brownie Points</span>
         </Link>
 
@@ -157,7 +157,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
         {/* Icon / Visual Container */}
         {icon && (
           <div className={`error-icon-box ${iconVariant !== 'default' ? `icon-${iconVariant}` : ''}`} aria-hidden="true">
-            <i className={`bi ${icon}`}></i>
+            <i className={`bi ${icon}`} aria-hidden="true"></i>
           </div>
         )}
 

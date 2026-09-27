@@ -150,14 +150,14 @@ export default function EmployeeIkigaiPage() {
 
           {success && (
             <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-              <i className="bi bi-check-circle-fill me-2"></i> {success}
-              <button type="button" className="btn-close" onClick={() => setSuccess(null)}></button>
+              <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {success}
+              <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setSuccess(null)}></button>
             </div>
           )}
 
           {error && (
             <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-              <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+              <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
             </div>
           )}
 
@@ -178,7 +178,7 @@ export default function EmployeeIkigaiPage() {
                       <div className="enterprise-card h-100">
                         <div className="enterprise-card-header d-flex justify-content-between align-items-center">
                           <div className="d-flex align-items-center gap-2">
-                            <i className={`bi ${dim.icon}`}></i>
+                            <i className={`bi ${dim.icon}`} aria-hidden="true"></i>
                             <span className="fw-bold">{dim.title}</span>
                           </div>
                           <span className={`badge border ${dim.badgeClass}`} style={{ fontSize: '0.7rem' }}>
@@ -195,11 +195,12 @@ export default function EmployeeIkigaiPage() {
                             <div className="d-flex flex-column gap-3">
                               {dimResponses.map((r: any) => (
                                 <div key={r.id} className="p-3 bg-light border">
-                                  <label className="form-label small fw-semibold text-dark mb-1 d-block">
+                                  <label htmlFor={`ikigai-${r.questionId}`} className="form-label small fw-semibold text-dark mb-1 d-block">
                                     {r.question?.questionText || 'Reflection Prompt'}
                                   </label>
                                   {isEditing ? (
                                     <textarea
+                                      id={`ikigai-${r.questionId}`}
                                       className="form-control form-control-sm bg-white"
                                       rows={2}
                                       value={editValues[r.questionId] || ''}

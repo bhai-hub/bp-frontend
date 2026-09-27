@@ -68,14 +68,14 @@ export default function EmployeeProfilePage() {
 
         {success && (
           <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-check-circle-fill me-2"></i> {success}
-            <button type="button" className="btn-close" onClick={() => setSuccess(null)}></button>
+            <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {success}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setSuccess(null)}></button>
           </div>
         )}
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -143,28 +143,32 @@ export default function EmployeeProfilePage() {
                 <div className="p-4">
                   <form onSubmit={handleUpdate}>
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase">
+                      <label htmlFor="profile-first-name" className="form-label small fw-semibold text-muted text-uppercase">
                         First Name
                       </label>
                       <input
+                        id="profile-first-name"
                         type="text"
                         className="form-control"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         required
+                        aria-required="true"
                       />
                     </div>
 
                     <div className="mb-4">
-                      <label className="form-label small fw-semibold text-muted text-uppercase">
+                      <label htmlFor="profile-last-name" className="form-label small fw-semibold text-muted text-uppercase">
                         Last Name
                       </label>
                       <input
+                        id="profile-last-name"
                         type="text"
                         className="form-control"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         required
+                        aria-required="true"
                       />
                     </div>
 

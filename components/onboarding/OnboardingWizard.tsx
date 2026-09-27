@@ -13,16 +13,16 @@ const steps = [
 
 export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ currentStep }) => {
   return (
-    <div className="enterprise-card mb-4">
+    <nav aria-label="Onboarding Steps" className="enterprise-card mb-4">
       <div className="p-3 p-md-4">
-        <div className="d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <ol className="list-unstyled d-flex flex-wrap align-items-center justify-content-between gap-2 mb-0" style={{ paddingLeft: 0 }}>
           {steps.map((s, idx) => {
             const isCompleted = s.step < currentStep;
             const isCurrent = s.step === currentStep;
 
             return (
               <React.Fragment key={s.step}>
-                <div className="d-flex align-items-center gap-2">
+                <li className="d-flex align-items-center gap-2" aria-current={isCurrent ? 'step' : undefined}>
                   <div
                     className={`d-flex align-items-center justify-content-center rounded ${
                       isCompleted
@@ -32,8 +32,9 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ currentStep 
                         : 'bg-light text-muted border'
                     }`}
                     style={{ width: '32px', height: '32px', fontSize: '0.85rem', fontWeight: 'bold' }}
+                    aria-hidden="true"
                   >
-                    {isCompleted ? <i className="bi bi-check-lg"></i> : s.step}
+                    {isCompleted ? <i className="bi bi-check-lg" aria-hidden="true"></i> : s.step}
                   </div>
                   <div>
                     <span
@@ -41,17 +42,22 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ currentStep 
                         isCurrent ? 'text-primary' : isCompleted ? 'text-dark' : 'text-muted'
                       }`}
                     >
+                      <span className="visually-hidden">Step {s.step}: </span>
                       {s.label}
                     </span>
-                    <span className="small text-muted d-none d-lg-inline" style={{ fontSize: '0.75rem' }}>
+                    <span className="small text-muted d-none d-lg-inline" style={{ fontSize: '0.75rem' }} aria-hidden="true">
                       {isCompleted ? 'Completed' : isCurrent ? 'In Progress' : 'Pending'}
                     </span>
+                    <span className="visually-hidden">
+                      ({isCompleted ? 'Completed' : isCurrent ? 'In Progress' : 'Pending'})
+                    </span>
                   </div>
-                </div>
+                </li>
 
                 {idx < steps.length - 1 && (
                   <div
                     className="flex-grow-1 d-none d-md-block mx-2"
+                    aria-hidden="true"
                     style={{
                       height: '2px',
                       backgroundColor: isCompleted ? '#10b981' : '#e2e8f0',
@@ -61,9 +67,9 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ currentStep 
               </React.Fragment>
             );
           })}
-        </div>
+        </ol>
       </div>
-    </div>
+    </nav>
   );
 };
 

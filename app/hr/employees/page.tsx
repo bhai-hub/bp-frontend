@@ -258,14 +258,14 @@ export default function HrEmployeesPage() {
 
         {success && (
           <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-check-circle-fill me-2"></i> {success}
-            <button type="button" className="btn-close" onClick={() => setSuccess(null)}></button>
+            <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {success}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setSuccess(null)}></button>
           </div>
         )}
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -275,21 +275,23 @@ export default function HrEmployeesPage() {
             <table className="enterprise-table">
               <thead>
                 <tr>
-                  <th>Code</th>
-                  <th>Employee Name</th>
-                  <th>Department & Role</th>
-                  <th>Account</th>
-                  <th>Onboarding</th>
-                  <th>Spendable BP</th>
-                  <th>Lifetime BP</th>
-                  <th className="text-end">Actions</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Employee Name</th>
+                  <th scope="col">Department & Role</th>
+                  <th scope="col">Account</th>
+                  <th scope="col">Onboarding</th>
+                  <th scope="col">Spendable BP</th>
+                  <th scope="col">Lifetime BP</th>
+                  <th scope="col" className="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td colSpan={8} className="text-center py-4">
-                      <div className="spinner-border spinner-border-sm text-primary me-2"></div>
+                      <div className="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
                       Loading employees...
                     </td>
                   </tr>
@@ -320,6 +322,7 @@ export default function HrEmployeesPage() {
                           onClick={() => handleToggleStatus(emp.id, emp.status)}
                           className="btn p-0 border-0"
                           title="Click to toggle active/inactive"
+                          aria-label={`Toggle active status for ${emp.user.firstName} ${emp.user.lastName}, currently ${emp.status}`}
                         >
                           <span
                             className={`enterprise-badge enterprise-badge-${
@@ -346,8 +349,9 @@ export default function HrEmployeesPage() {
                             className="btn btn-sm btn-outline-primary py-1 px-2"
                             disabled={emp.status !== 'ACTIVE'}
                             title={emp.status !== 'ACTIVE' ? 'Cannot credit inactive employee' : 'Credit BP'}
+                            aria-label={`Credit Brownie Points to ${emp.user.firstName} ${emp.user.lastName}`}
                           >
-                            <i className="bi bi-award me-1"></i> Credit BP
+                            <i className="bi bi-award me-1" aria-hidden="true"></i> Credit BP
                           </button>
                           {emp.onboardingStatus !== 'COMPLETED' && (
                             <button
@@ -355,12 +359,15 @@ export default function HrEmployeesPage() {
                               className="btn btn-sm btn-outline-secondary py-1 px-2"
                               disabled={resendingId === emp.id}
                               title="Resend single-use onboarding invitation link"
+                              aria-label={`Resend invitation link to ${emp.user.firstName} ${emp.user.lastName}`}
                             >
                               {resendingId === emp.id ? (
-                                <span className="spinner-border spinner-border-sm"></span>
+                                <span className="spinner-border spinner-border-sm" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </span>
                               ) : (
                                 <>
-                                  <i className="bi bi-envelope-arrow-up me-1"></i> Invite
+                                  <i className="bi bi-envelope-arrow-up me-1" aria-hidden="true"></i> Invite
                                 </>
                               )}
                             </button>
@@ -377,14 +384,26 @@ export default function HrEmployeesPage() {
 
         {/* Credit BP Modal */}
         {showCreditModal && selectedEmp && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="credit-bp-modal-title"
+          >
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
-                  <h6 className="modal-title fw-bold mb-0">
+                  <h6 id="credit-bp-modal-title" className="modal-title fw-bold mb-0">
                     Credit Brownie Points to {selectedEmp.user.firstName} {selectedEmp.user.lastName}
                   </h6>
-                  <button type="button" className="btn-close" onClick={() => setShowCreditModal(false)}></button>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close dialog"
+                    onClick={() => setShowCreditModal(false)}
+                  ></button>
                 </div>
                 <form onSubmit={handleExecuteCredit}>
                   <div className="modal-body p-4">
@@ -406,10 +425,11 @@ export default function HrEmployeesPage() {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase">
+                      <label htmlFor="credit-amount-input" className="form-label small fw-semibold text-muted text-uppercase">
                         Brownie Points Amount
                       </label>
                       <input
+                        id="credit-amount-input"
                         type="number"
                         min="1"
                         max={orgBP}
@@ -418,6 +438,7 @@ export default function HrEmployeesPage() {
                         value={creditAmount}
                         onChange={(e) => setCreditAmount(Number(e.target.value))}
                         required
+                        aria-required="true"
                       />
                       <div className="form-text small">
                         Deducted from company available reserve and credited to employee spendable & lifetime balances.
@@ -425,16 +446,18 @@ export default function HrEmployeesPage() {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase">
+                      <label htmlFor="credit-reason-input" className="form-label small fw-semibold text-muted text-uppercase">
                         Recognition Rationale / Reason
                       </label>
                       <input
+                        id="credit-reason-input"
                         type="text"
                         className="form-control"
                         placeholder="e.g. Critical production release lead & mentoring junior engineers"
                         value={creditReason}
                         onChange={(e) => setCreditReason(e.target.value)}
                         required
+                        aria-required="true"
                       />
                     </div>
                   </div>
@@ -463,81 +486,105 @@ export default function HrEmployeesPage() {
 
         {/* Add Employee Modal */}
         {showAddModal && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="add-emp-modal-title"
+          >
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
-                  <h6 className="modal-title fw-bold mb-0">Onboard New Employee</h6>
-                  <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}></button>
+                  <h6 id="add-emp-modal-title" className="modal-title fw-bold mb-0">Onboard New Employee</h6>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close dialog"
+                    onClick={() => setShowAddModal(false)}
+                  ></button>
                 </div>
                 <form onSubmit={handleAddEmployee}>
                   <div className="modal-body p-4">
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">First Name</label>
+                        <label htmlFor="add-emp-first-name" className="form-label small fw-semibold text-muted text-uppercase">First Name</label>
                         <input
+                          id="add-emp-first-name"
                           type="text"
                           className="form-control"
                           value={empForm.firstName}
                           onChange={(e) => setEmpForm({ ...empForm, firstName: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Last Name</label>
+                        <label htmlFor="add-emp-last-name" className="form-label small fw-semibold text-muted text-uppercase">Last Name</label>
                         <input
+                          id="add-emp-last-name"
                           type="text"
                           className="form-control"
                           value={empForm.lastName}
                           onChange={(e) => setEmpForm({ ...empForm, lastName: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-12">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Corporate Email</label>
+                        <label htmlFor="add-emp-email" className="form-label small fw-semibold text-muted text-uppercase">Corporate Email</label>
                         <input
+                          id="add-emp-email"
                           type="email"
                           className="form-control"
                           placeholder="employee@company.com"
                           value={empForm.email}
                           onChange={(e) => setEmpForm({ ...empForm, email: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Employee ID Code</label>
+                        <label htmlFor="add-emp-code" className="form-label small fw-semibold text-muted text-uppercase">Employee ID Code</label>
                         <input
+                          id="add-emp-code"
                           type="text"
                           className="form-control"
                           value={empForm.employeeCode}
                           onChange={(e) => setEmpForm({ ...empForm, employeeCode: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Department</label>
+                        <label htmlFor="add-emp-dept" className="form-label small fw-semibold text-muted text-uppercase">Department</label>
                         <input
+                          id="add-emp-dept"
                           type="text"
                           className="form-control"
                           placeholder="Engineering, Sales, etc."
                           value={empForm.department}
                           onChange={(e) => setEmpForm({ ...empForm, department: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-12">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Designation / Title</label>
+                        <label htmlFor="add-emp-title" className="form-label small fw-semibold text-muted text-uppercase">Designation / Title</label>
                         <input
+                          id="add-emp-title"
                           type="text"
                           className="form-control"
                           placeholder="Senior Software Engineer"
                           value={empForm.designation}
                           onChange={(e) => setEmpForm({ ...empForm, designation: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
                     </div>
@@ -563,17 +610,25 @@ export default function HrEmployeesPage() {
 
         {/* Invitation Link Modal */}
         {invitationModal && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="invitation-modal-title"
+          >
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
                   <div className="d-flex align-items-center gap-2">
-                    <i className="bi bi-envelope-check-fill text-success fs-5"></i>
-                    <h6 className="modal-title fw-bold mb-0">Onboarding Invitation Link</h6>
+                    <i className="bi bi-envelope-check-fill text-success fs-5" aria-hidden="true"></i>
+                    <h6 id="invitation-modal-title" className="modal-title fw-bold mb-0">Onboarding Invitation Link</h6>
                   </div>
                   <button
                     type="button"
                     className="btn-close"
+                    aria-label="Close dialog"
                     onClick={() => {
                       setInvitationModal(null);
                       setCopied(false);
@@ -587,11 +642,12 @@ export default function HrEmployeesPage() {
                     <code>{invitationModal.email}</code>).
                   </p>
 
-                  <label className="form-label small fw-semibold text-muted text-uppercase">
+                  <label htmlFor="invitation-direct-link" className="form-label small fw-semibold text-muted text-uppercase">
                     Direct Invitation Link
                   </label>
                   <div className="input-group mb-3">
                     <input
+                      id="invitation-direct-link"
                       type="text"
                       className="form-control font-monospace small"
                       readOnly
@@ -604,6 +660,7 @@ export default function HrEmployeesPage() {
                     <button
                       className={`btn ${copied ? 'btn-success' : 'btn-outline-primary'}`}
                       type="button"
+                      aria-label={copied ? 'Invitation link copied to clipboard' : 'Copy invitation link to clipboard'}
                       onClick={() => {
                         if (typeof window !== 'undefined') {
                           navigator.clipboard.writeText(
@@ -614,14 +671,14 @@ export default function HrEmployeesPage() {
                         }
                       }}
                     >
-                      <i className={`bi ${copied ? 'bi-check-lg' : 'bi-clipboard'} me-1`}></i>
+                      <i className={`bi ${copied ? 'bi-check-lg' : 'bi-clipboard'} me-1`} aria-hidden="true"></i>
                       {copied ? 'Copied!' : 'Copy Link'}
                     </button>
                   </div>
 
                   <div className="p-3 bg-light border">
                     <div className="d-flex align-items-start gap-2">
-                      <i className="bi bi-shield-lock-fill text-primary mt-1"></i>
+                      <i className="bi bi-shield-lock-fill text-primary mt-1" aria-hidden="true"></i>
                       <div className="small text-muted" style={{ fontSize: '0.8rem' }}>
                         <strong className="text-dark d-block mb-1">Cryptographic Token Security</strong>
                         Only the SHA-256 hash of this invitation token is stored in the database. Send this private link directly to the employee to activate their account.

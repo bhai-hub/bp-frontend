@@ -23,7 +23,7 @@ export default function Hero() {
             </p>
             <div className="hero-cta-row">
               <Link href="/contact" className="btn btn-primary-cta">
-                Request a Demo <i className="bi bi-arrow-right ms-1" />
+                Request a Demo <i className="bi bi-arrow-right ms-1" aria-hidden="true" />
               </Link>
               <a href="#how-it-works" className="btn btn-ghost-cta">
                 Explore Architecture
@@ -61,7 +61,7 @@ export default function Hero() {
                   fontWeight: 700,
                   textTransform: "uppercase" as const,
                   letterSpacing: 0.7,
-                  color: "rgba(255,255,255,0.5)",
+                  color: "rgba(255,255,255,0.75)",
                 }}
               >
                 Recognition Categories
@@ -88,15 +88,15 @@ export default function Hero() {
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      color: "rgba(255,255,255,0.7)",
+                      color: "rgba(255,255,255,0.85)",
                       fontSize: 15,
                     }}
                   >
-                    <i className={`bi ${a.icon}`} />
+                    <i className={`bi ${a.icon}`} aria-hidden="true" />
                   </div>
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 3 }}>{a.label}</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>{a.desc}</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>{a.desc}</div>
                   </div>
                 </div>
               ))}
@@ -106,10 +106,10 @@ export default function Hero() {
                   borderTop: "1px solid rgba(255,255,255,0.08)",
                   background: "rgba(255,255,255,0.04)",
                   fontSize: 12,
-                  color: "rgba(255,255,255,0.55)",
+                  color: "rgba(255,255,255,0.8)",
                 }}
               >
-                <i className="bi bi-info-circle me-2" style={{ color: "var(--amber)" }} />
+                <i className="bi bi-info-circle me-2" aria-hidden="true" style={{ color: "var(--amber)" }} />
                 No rankings. No competition. Points reflect contribution only.
               </div>
             </div>

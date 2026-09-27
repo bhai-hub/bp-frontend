@@ -9,14 +9,14 @@ export default function OnboardingCompletePage() {
   const { user } = useAuth();
 
   return (
-    <div className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
+    <main id="main-content" tabIndex={-1} className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
       <div className="container" style={{ maxWidth: '800px' }}>
         {/* Brand Header */}
         <div className="text-center mb-4">
-          <div className="d-inline-flex align-items-center justify-content-center p-2 mb-2 bg-primary text-white rounded">
+          <div className="d-inline-flex align-items-center justify-content-center p-2 mb-2 bg-primary text-white rounded" aria-hidden="true">
             <i className="bi bi-award-fill fs-4"></i>
           </div>
-          <h3 className="fw-bold text-dark mb-1">Brownie Points</h3>
+          <h1 className="fw-bold text-dark mb-1 fs-3">Brownie Points</h1>
           <p className="text-muted small">Employee Onboarding Completed</p>
         </div>
 
@@ -90,11 +90,11 @@ export default function OnboardingCompletePage() {
 
           <div className="d-flex justify-content-center gap-3">
             <Link href="/employee" className="btn btn-primary px-4 py-2">
-              <i className="bi bi-speedometer2 me-2"></i> Launch Employee Dashboard
+              <i className="bi bi-speedometer2 me-2" aria-hidden="true"></i> Launch Employee Dashboard
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -16,7 +16,7 @@ export default function CTA() {
             </p>
             <div className="d-flex gap-3 flex-wrap">
               <Link href="/contact" className="btn btn-primary-cta">
-                <i className="bi bi-box-arrow-in-right me-2" />
+                <i className="bi bi-box-arrow-in-right me-2" aria-hidden="true" />
                 Request a Free Demo
               </Link>
               <a
@@ -26,7 +26,7 @@ export default function CTA() {
                 className="btn"
                 style={{
                   border: "1px solid rgba(255,255,255,0.25)",
-                  color: "rgba(255,255,255,0.8)",
+                  color: "rgba(255,255,255,0.9)",
                   fontSize: 14,
                   fontWeight: 500,
                   borderRadius: 4,
@@ -46,7 +46,7 @@ export default function CTA() {
                 padding: "26px 28px",
               }}
             >
-              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: 0.7, color: "rgba(255,255,255,0.35)", marginBottom: 18 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: 0.7, color: "rgba(255,255,255,0.75)", marginBottom: 18 }}>
                 Why Organisations Choose Us
               </div>
               {[
@@ -66,10 +66,10 @@ export default function CTA() {
                     padding: "9px 0",
                     borderBottom: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
                     fontSize: 13,
-                    color: "rgba(255,255,255,0.72)",
+                    color: "rgba(255,255,255,0.85)",
                   }}
                 >
-                  <i className="bi bi-check-circle" style={{ color: "#5ECF8A", flexShrink: 0, fontSize: 14 }} />
+                  <i className="bi bi-check-circle" aria-hidden="true" style={{ color: "#5ECF8A", flexShrink: 0, fontSize: 14 }} />
                   {item}
                 </div>
               ))}

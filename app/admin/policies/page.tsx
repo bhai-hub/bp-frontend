@@ -136,15 +136,15 @@ export default function JurisdictionPoliciesPage() {
 
         {success && (
           <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-check-circle-fill me-2"></i> {success}
-            <button type="button" className="btn-close" onClick={() => setSuccess(null)}></button>
+            <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {success}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setSuccess(null)}></button>
           </div>
         )}
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
-            <button type="button" className="btn-close" onClick={() => setError(null)}></button>
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setError(null)}></button>
           </div>
         )}
 
@@ -192,12 +192,13 @@ export default function JurisdictionPoliciesPage() {
             <div className="d-flex align-items-center gap-2 flex-grow-1" style={{ maxWidth: '400px' }}>
               <div className="input-group input-group-sm">
                 <span className="input-group-text bg-white border-end-0">
-                  <i className="bi bi-search text-muted"></i>
+                  <i className="bi bi-search text-muted" aria-hidden="true"></i>
                 </span>
                 <input
                   type="text"
                   className="form-control border-start-0"
                   placeholder="Search by country, code, or description..."
+                  aria-label="Search by country, code, or description"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -206,7 +207,7 @@ export default function JurisdictionPoliciesPage() {
 
             <div className="d-flex align-items-center gap-2">
               <span className="text-muted small">Status:</span>
-              <div className="btn-group btn-group-sm">
+              <div className="btn-group btn-group-sm" role="group" aria-label="Filter policies by status">
                 <button
                   type="button"
                   className={`btn ${statusFilter === 'ALL' ? 'btn-primary' : 'btn-outline-secondary'}`}
@@ -244,13 +245,13 @@ export default function JurisdictionPoliciesPage() {
             <table className="enterprise-table">
               <thead>
                 <tr>
-                  <th>Country & Code</th>
-                  <th>Version</th>
-                  <th>Governance Status</th>
-                  <th>Feature Rules Summary</th>
-                  <th>Data Residency</th>
-                  <th>Orgs</th>
-                  <th className="text-end">Actions</th>
+                  <th scope="col">Country & Code</th>
+                  <th scope="col">Version</th>
+                  <th scope="col">Governance Status</th>
+                  <th scope="col">Feature Rules Summary</th>
+                  <th scope="col">Data Residency</th>
+                  <th scope="col">Orgs</th>
+                  <th scope="col" className="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -365,15 +366,17 @@ export default function JurisdictionPoliciesPage() {
                             onClick={() => setSelectedPolicy(p)}
                             className="btn btn-outline-secondary"
                             title="Inspect Feature Rules"
+                            aria-label={`Inspect feature rules for ${p.country?.name || p.countryCode}`}
                           >
-                            <i className="bi bi-eye"></i>
+                            <i className="bi bi-eye" aria-hidden="true"></i>
                           </button>
                           <Link
                             href={`/admin/policies/${p.countryCode}`}
                             className="btn btn-outline-primary"
                             title="Configure Policy"
+                            aria-label={`Configure policy for ${p.country?.name || p.countryCode}`}
                           >
-                            <i className="bi bi-gear me-1"></i> Configure
+                            <i className="bi bi-gear me-1" aria-hidden="true"></i> Configure
                           </Link>
                         </div>
                       </td>
@@ -387,12 +390,19 @@ export default function JurisdictionPoliciesPage() {
 
         {/* Quick View Policy Modal */}
         {selectedPolicy && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quick-view-policy-title"
+          >
             <div className="modal-dialog modal-dialog-centered modal-lg">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
                   <div className="d-flex align-items-center gap-2">
-                    <h6 className="modal-title fw-bold mb-0">
+                    <h6 id="quick-view-policy-title" className="modal-title fw-bold mb-0">
                       Policy Profile: {selectedPolicy.country?.name || selectedPolicy.countryCode} ({selectedPolicy.countryCode})
                     </h6>
                     <span className="badge bg-secondary">v{selectedPolicy.policyVersion}</span>
@@ -400,6 +410,7 @@ export default function JurisdictionPoliciesPage() {
                   <button
                     type="button"
                     className="btn-close"
+                    aria-label="Close dialog"
                     onClick={() => setSelectedPolicy(null)}
                   ></button>
                 </div>
@@ -441,9 +452,9 @@ export default function JurisdictionPoliciesPage() {
                     <table className="table table-sm table-bordered align-middle mb-0">
                       <thead className="table-light small">
                         <tr>
-                          <th>Governance Dimension</th>
-                          <th>Status</th>
-                          <th>System Behavior</th>
+                          <th scope="col">Governance Dimension</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">System Behavior</th>
                         </tr>
                       </thead>
                       <tbody className="small">
@@ -629,17 +640,25 @@ export default function JurisdictionPoliciesPage() {
 
         {/* Create Policy Modal */}
         {showCreateModal && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="create-policy-title"
+          >
             <div className="modal-dialog modal-dialog-centered modal-lg">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
-                  <h6 className="modal-title fw-bold mb-0">
-                    <i className="bi bi-shield-plus me-2 text-primary"></i>
+                  <h6 id="create-policy-title" className="modal-title fw-bold mb-0">
+                    <i className="bi bi-shield-plus me-2 text-primary" aria-hidden="true"></i>
                     Create Jurisdiction Policy Profile
                   </h6>
                   <button
                     type="button"
                     className="btn-close"
+                    aria-label="Close dialog"
                     onClick={() => setShowCreateModal(false)}
                   ></button>
                 </div>
@@ -647,14 +666,16 @@ export default function JurisdictionPoliciesPage() {
                   <div className="modal-body p-4">
                     <div className="row g-3 mb-3">
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="policy-country-code" className="form-label small fw-semibold text-muted text-uppercase">
                           Country <span className="text-danger">*</span>
                         </label>
                         <select
+                          id="policy-country-code"
                           className="form-select"
                           value={createForm.countryCode}
                           onChange={(e) => setCreateForm({ ...createForm, countryCode: e.target.value })}
                           required
+                          aria-required="true"
                         >
                           {countries.map((c) => (
                             <option key={c.code} value={c.code}>
@@ -664,10 +685,11 @@ export default function JurisdictionPoliciesPage() {
                         </select>
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="policy-gov-status" className="form-label small fw-semibold text-muted text-uppercase">
                           Governance Status
                         </label>
                         <select
+                          id="policy-gov-status"
                           className="form-select"
                           value={createForm.status}
                           onChange={(e) => setCreateForm({ ...createForm, status: e.target.value })}
@@ -679,10 +701,11 @@ export default function JurisdictionPoliciesPage() {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase">
+                      <label htmlFor="policy-description" className="form-label small fw-semibold text-muted text-uppercase">
                         Policy Description & Rationale
                       </label>
                       <input
+                        id="policy-description"
                         type="text"
                         className="form-control"
                         placeholder="e.g., Works-council compliance profile with restricted employee scoring"
@@ -829,10 +852,11 @@ export default function JurisdictionPoliciesPage() {
                     </h6>
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="policy-data-location" className="form-label small fw-semibold text-muted text-uppercase">
                           Data Location Policy
                         </label>
                         <select
+                          id="policy-data-location"
                           className="form-select"
                           value={createForm.dataLocationPolicy}
                           onChange={(e) => setCreateForm({ ...createForm, dataLocationPolicy: e.target.value })}
@@ -845,10 +869,11 @@ export default function JurisdictionPoliciesPage() {
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="policy-retention" className="form-label small fw-semibold text-muted text-uppercase">
                           Data Retention Policy
                         </label>
                         <select
+                          id="policy-retention"
                           className="form-select"
                           value={createForm.retentionPolicy}
                           onChange={(e) => setCreateForm({ ...createForm, retentionPolicy: e.target.value })}

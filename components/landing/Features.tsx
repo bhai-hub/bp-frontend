@@ -69,7 +69,7 @@ export default function Features() {
                     fontSize: 15,
                   }}
                 >
-                  <i className={`bi ${f.icon}`} />
+                  <i className={`bi ${f.icon}`} aria-hidden="true" />
                 </div>
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", marginBottom: 4 }}>{f.title}</div>
@@ -132,7 +132,7 @@ export default function Features() {
                   lineHeight: 1.6,
                 }}
               >
-                <i className="bi bi-info-circle me-2" style={{ color: "var(--navy)" }} />
+                <i className="bi bi-info-circle me-2" aria-hidden="true" style={{ color: "var(--navy)" }} />
                 No ranking system. Every employee&apos;s balance is independent — points reflect contribution, not competition.
               </div>
             </div>

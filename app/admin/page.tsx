@@ -97,14 +97,14 @@ export default function AdminDashboardPage() {
 
         {purchaseSuccess && (
           <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-check-circle-fill me-2"></i> {purchaseSuccess}
-            <button type="button" className="btn-close" onClick={() => setPurchaseSuccess(null)}></button>
+            <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {purchaseSuccess}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setPurchaseSuccess(null)}></button>
           </div>
         )}
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -186,19 +186,19 @@ export default function AdminDashboardPage() {
                   <div className="enterprise-card-header d-flex justify-content-between align-items-center">
                     <span>Organizations Directory</span>
                     <Link href="/admin/organizations" className="text-decoration-none small">
-                      View All <i className="bi bi-arrow-right"></i>
+                      View All <i className="bi bi-arrow-right" aria-hidden="true"></i>
                     </Link>
                   </div>
                   <div className="table-responsive">
                     <table className="enterprise-table">
                       <thead>
                         <tr>
-                          <th>Organization</th>
-                          <th>Slug</th>
-                          <th>Status</th>
-                          <th>Purchased BP</th>
-                          <th>Available BP</th>
-                          <th className="text-end">Action</th>
+                          <th scope="col">Organization</th>
+                          <th scope="col">Slug</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Purchased BP</th>
+                          <th scope="col">Available BP</th>
+                          <th scope="col" className="text-end">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -230,6 +230,7 @@ export default function AdminDashboardPage() {
                               <Link
                                 href={`/admin/organizations/${org.id}`}
                                 className="btn btn-sm btn-outline-primary py-1 px-2"
+                                aria-label={`View details for organization ${org.name}`}
                               >
                                 View Details
                               </Link>
@@ -277,14 +278,22 @@ export default function AdminDashboardPage() {
 
         {/* Purchase BP Modal */}
         {showPurchaseModal && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="purchase-bp-modal-title"
+          >
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
-                  <h6 className="modal-title fw-bold mb-0">Execute Simulated BP Purchase</h6>
+                  <h6 id="purchase-bp-modal-title" className="modal-title fw-bold mb-0">Execute Simulated BP Purchase</h6>
                   <button
                     type="button"
                     className="btn-close"
+                    aria-label="Close dialog"
                     onClick={() => setShowPurchaseModal(false)}
                   ></button>
                 </div>
@@ -295,14 +304,16 @@ export default function AdminDashboardPage() {
                     </p>
 
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase letter-spacing">
+                      <label htmlFor="purchase-org-select" className="form-label small fw-semibold text-muted text-uppercase letter-spacing">
                         Target Organization
                       </label>
                       <select
+                        id="purchase-org-select"
                         className="form-select"
                         value={selectedOrgId}
                         onChange={(e) => setSelectedOrgId(e.target.value)}
                         required
+                        aria-required="true"
                       >
                         <option value="">Select Organization</option>
                         {data?.recentOrganizations?.map((org: any) => (
@@ -314,10 +325,11 @@ export default function AdminDashboardPage() {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase letter-spacing">
+                      <label htmlFor="purchase-bp-quantity" className="form-label small fw-semibold text-muted text-uppercase letter-spacing">
                         BP Quantity to Purchase
                       </label>
                       <input
+                        id="purchase-bp-quantity"
                         type="number"
                         min="1"
                         step="1000"
@@ -325,19 +337,22 @@ export default function AdminDashboardPage() {
                         value={purchaseQuantity}
                         onChange={(e) => setPurchaseQuantity(Number(e.target.value))}
                         required
+                        aria-required="true"
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label small fw-semibold text-muted text-uppercase letter-spacing">
+                      <label htmlFor="purchase-ref-code" className="form-label small fw-semibold text-muted text-uppercase letter-spacing">
                         Purchase Reference Code
                       </label>
                       <input
+                        id="purchase-ref-code"
                         type="text"
                         className="form-control"
                         value={purchaseRef}
                         onChange={(e) => setPurchaseRef(e.target.value)}
                         required
+                        aria-required="true"
                       />
                     </div>
                   </div>

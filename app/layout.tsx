@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './globals.css';
 import { AuthProvider } from '../context/AuthContext';
+import { AccessibilityProvider } from '../context/AccessibilityContext';
+import { SkipLink } from '../components/SkipLink';
+import { AccessibilityToolbar } from '../components/AccessibilityToolbar';
 
 export const metadata: Metadata = {
   title: 'Brownie Points — Enterprise Employee Recognition & Rewards',
@@ -21,7 +24,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AccessibilityProvider>
+          <SkipLink />
+          <AuthProvider>{children}</AuthProvider>
+          <AccessibilityToolbar />
+        </AccessibilityProvider>
       </body>
     </html>
   );

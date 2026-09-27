@@ -48,7 +48,7 @@ export default function EnterpriseBenefits() {
           {benefits.map((b) => (
             <div className="col-sm-6 col-lg-3" key={b.title}>
               <div className="benefit-card">
-                <i className={`bi ${b.icon} benefit-icon`} />
+                <i className={`bi ${b.icon} benefit-icon`} aria-hidden="true" />
                 <div className="benefit-title">{b.title}</div>
                 <p className="benefit-body mb-0">{b.body}</p>
               </div>
@@ -70,7 +70,7 @@ export default function EnterpriseBenefits() {
                 color: "var(--navy)",
               }}
             >
-              <i className="bi bi-check-circle-fill me-2" style={{ color: "var(--green)", fontSize: 11 }} />
+              <i className="bi bi-check-circle-fill me-2" aria-hidden="true" style={{ color: "var(--green)", fontSize: 11 }} />
               {tag}
             </span>
           ))}

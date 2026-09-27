@@ -52,7 +52,7 @@ export default function EmployeeExperience() {
                   key={item}
                   style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 13, color: "var(--muted)", marginBottom: 10, lineHeight: 1.55 }}
                 >
-                  <i className="bi bi-check-lg mt-1" style={{ color: "var(--green)", flexShrink: 0, fontSize: 14 }} />
+                  <i className="bi bi-check-lg mt-1" aria-hidden="true" style={{ color: "var(--green)", flexShrink: 0, fontSize: 14 }} />
                   {item}
                 </li>
               ))}
@@ -68,7 +68,7 @@ export default function EmployeeExperience() {
                     className="point-type-card"
                     style={{ borderTop: `3px solid ${pt.accent}` }}
                   >
-                    <i className={`bi ${pt.icon}`} style={{ fontSize: 20, color: pt.accent, marginBottom: 10, display: "block" }} />
+                    <i className={`bi ${pt.icon}`} aria-hidden="true" style={{ fontSize: 20, color: pt.accent, marginBottom: 10, display: "block" }} />
                     <div className="pt-label">{pt.label}</div>
                     <div className="pt-value" style={{ color: pt.accent }}>{pt.value}</div>
                     <p className="pt-desc mb-0">{pt.desc}</p>

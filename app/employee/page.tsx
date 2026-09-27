@@ -48,20 +48,20 @@ export default function EmployeeDashboardPage() {
 
             <div className="d-flex gap-2">
               <Link href="/employee/ikigai" className="btn btn-outline-primary btn-sm">
-                <i className="bi bi-compass me-1"></i> My Ikigai
+                <i className="bi bi-compass me-1" aria-hidden="true"></i> My Ikigai
               </Link>
               <Link href="/employee/my-bp" className="btn btn-primary btn-sm">
-                <i className="bi bi-wallet2 me-1"></i> View Wallet Details
+                <i className="bi bi-wallet2 me-1" aria-hidden="true"></i> View Wallet Details
               </Link>
               <Link href="/employee/profile" className="btn btn-outline-secondary btn-sm">
-                <i className="bi bi-person me-1"></i> My Profile
+                <i className="bi bi-person me-1" aria-hidden="true"></i> My Profile
               </Link>
             </div>
           </div>
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -141,7 +141,7 @@ export default function EmployeeDashboardPage() {
               <div className="enterprise-card-header d-flex justify-content-between align-items-center">
                 <span>Recent Brownie Points Received</span>
                 <Link href="/employee/activity" className="text-decoration-none small">
-                  Full History <i className="bi bi-arrow-right"></i>
+                  Full History <i className="bi bi-arrow-right" aria-hidden="true"></i>
                 </Link>
               </div>
 
@@ -149,10 +149,10 @@ export default function EmployeeDashboardPage() {
                 <table className="enterprise-table">
                   <thead>
                     <tr>
-                      <th>Date Received</th>
-                      <th>Award Description / Rationale</th>
-                      <th>Reference</th>
-                      <th className="text-end">Points Credited</th>
+                      <th scope="col">Date Received</th>
+                      <th scope="col">Award Description / Rationale</th>
+                      <th scope="col">Reference</th>
+                      <th scope="col" className="text-end">Points Credited</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -102,14 +102,44 @@ const content = {
 
 export default function LegalModal({ type, onClose }: Props) {
   const data = content[type];
+  const modalRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+      if (e.key === "Tab" && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   return (
     <div
+      role="presentation"
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "rgba(0,0,0,0.55)",
+        background: "rgba(0,0,0,0.65)",
+        backdropFilter: "blur(4px)",
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
@@ -119,6 +149,10 @@ export default function LegalModal({ type, onClose }: Props) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="legal-modal-title"
         style={{
           background: "#fff",
           borderRadius: 5,
@@ -126,7 +160,7 @@ export default function LegalModal({ type, onClose }: Props) {
           maxWidth: 680,
           border: "1px solid var(--border)",
           overflow: "hidden",
-          boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.25)",
         }}
       >
         {/* Header */}
@@ -140,14 +174,18 @@ export default function LegalModal({ type, onClose }: Props) {
           }}
         >
           <div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: "#fff" }}>{data.title}</div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 3 }}>{data.effective}</div>
+            <h2 id="legal-modal-title" style={{ fontSize: 17, fontWeight: 700, color: "#fff", margin: 0 }}>
+              {data.title}
+            </h2>
+            <div style={{ fontSize: 12, color: "#cbd5e1", marginTop: 3 }}>{data.effective}</div>
           </div>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close legal dialog"
             style={{
-              background: "rgba(255,255,255,0.1)",
-              border: "1px solid rgba(255,255,255,0.2)",
+              background: "rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.25)",
               color: "#fff",
               borderRadius: 4,
               width: 32,
@@ -159,7 +197,7 @@ export default function LegalModal({ type, onClose }: Props) {
               fontSize: 16,
             }}
           >
-            <i className="bi bi-x" />
+            <i className="bi bi-x-lg" aria-hidden="true" />
           </button>
         </div>
 

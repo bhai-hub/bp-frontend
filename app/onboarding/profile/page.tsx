@@ -64,21 +64,26 @@ export default function OnboardingProfilePage() {
   }
 
   return (
-    <div className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
+    <main id="main-content" tabIndex={-1} className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
       <div className="container" style={{ maxWidth: '800px' }}>
         {/* Header & Signout */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div className="d-flex align-items-center gap-2">
-            <div className="p-2 bg-primary text-white rounded">
+            <div className="p-2 bg-primary text-white rounded" aria-hidden="true">
               <i className="bi bi-award-fill fs-5"></i>
             </div>
             <div>
-              <h5 className="fw-bold text-dark mb-0">Brownie Points</h5>
+              <h1 className="fw-bold text-dark mb-0 fs-5">Brownie Points</h1>
               <span className="text-muted small">Employee Onboarding</span>
             </div>
           </div>
-          <button onClick={logout} className="btn btn-outline-secondary btn-sm">
-            <i className="bi bi-box-arrow-right me-1"></i> Sign Out
+          <button
+            type="button"
+            onClick={logout}
+            className="btn btn-outline-secondary btn-sm"
+            aria-label="Sign out of onboarding session"
+          >
+            <i className="bi bi-box-arrow-right me-1" aria-hidden="true"></i> Sign Out
           </button>
         </div>
 
@@ -99,8 +104,8 @@ export default function OnboardingProfilePage() {
             </p>
 
             {error && (
-              <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-                <i className="bi bi-exclamation-triangle-fill me-2"></i>
+              <div className="alert alert-danger py-2 px-3 small mb-4" role="alert" aria-live="assertive">
+                <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>
                 {error}
               </div>
             )}
@@ -108,37 +113,42 @@ export default function OnboardingProfilePage() {
             <form onSubmit={handleSubmit}>
               <div className="row g-3 mb-3">
                 <div className="col-md-6">
-                  <label className="form-label small fw-semibold text-muted text-uppercase">
-                    First Name
+                  <label htmlFor="profile-first-name" className="form-label small fw-semibold text-muted text-uppercase">
+                    First Name <span className="text-danger" aria-hidden="true">*</span>
                   </label>
                   <input
+                    id="profile-first-name"
                     type="text"
                     className="form-control"
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                     required
+                    aria-required="true"
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-semibold text-muted text-uppercase">
-                    Last Name
+                  <label htmlFor="profile-last-name" className="form-label small fw-semibold text-muted text-uppercase">
+                    Last Name <span className="text-danger" aria-hidden="true">*</span>
                   </label>
                   <input
+                    id="profile-last-name"
                     type="text"
                     className="form-control"
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                     required
+                    aria-required="true"
                   />
                 </div>
               </div>
 
               <div className="mb-3">
-                <label className="form-label small fw-semibold text-muted text-uppercase">
+                <label htmlFor="profile-corp-email" className="form-label small fw-semibold text-muted text-uppercase">
                   Corporate Email
                 </label>
                 <input
+                  id="profile-corp-email"
                   type="email"
                   className="form-control bg-light"
                   value={user?.email || ''}
@@ -152,37 +162,41 @@ export default function OnboardingProfilePage() {
 
               <div className="row g-3 mb-4">
                 <div className="col-md-6">
-                  <label className="form-label small fw-semibold text-muted text-uppercase">
-                    Department
+                  <label htmlFor="profile-department" className="form-label small fw-semibold text-muted text-uppercase">
+                    Department <span className="text-danger" aria-hidden="true">*</span>
                   </label>
                   <input
+                    id="profile-department"
                     type="text"
                     className="form-control"
                     placeholder="e.g. Engineering, Sales, Operations"
                     value={formData.department}
                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                     required
+                    aria-required="true"
                   />
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label small fw-semibold text-muted text-uppercase">
-                    Designation / Title
+                  <label htmlFor="profile-designation" className="form-label small fw-semibold text-muted text-uppercase">
+                    Designation / Title <span className="text-danger" aria-hidden="true">*</span>
                   </label>
                   <input
+                    id="profile-designation"
                     type="text"
                     className="form-control"
                     placeholder="e.g. Senior Software Engineer"
                     value={formData.designation}
                     onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
                     required
+                    aria-required="true"
                   />
                 </div>
               </div>
 
               <div className="p-3 bg-light border mb-4">
                 <div className="d-flex align-items-start gap-2">
-                  <i className="bi bi-shield-check text-primary fs-5 mt-1"></i>
+                  <i className="bi bi-shield-check text-primary fs-5 mt-1" aria-hidden="true"></i>
                   <div className="small text-muted">
                     <strong className="text-dark d-block">Corporate Wallet Initialization</strong>
                     Your employee Brownie Points wallet will be registered under this profile. Spendable and loyalty point allocations will reflect this verified identity.
@@ -194,12 +208,12 @@ export default function OnboardingProfilePage() {
                 <button type="submit" className="btn btn-primary" disabled={submitting}>
                   {submitting ? (
                     <>
-                      <span className="spinner-border spinner-border-sm me-2"></span>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                       Saving Profile...
                     </>
                   ) : (
                     <>
-                      Confirm &amp; Proceed to Ikigai Reflections <i className="bi bi-arrow-right ms-1"></i>
+                      Confirm &amp; Proceed to Ikigai Reflections <i className="bi bi-arrow-right ms-1" aria-hidden="true"></i>
                     </>
                   )}
                 </button>
@@ -208,6 +222,6 @@ export default function OnboardingProfilePage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

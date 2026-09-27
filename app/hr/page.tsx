@@ -117,18 +117,18 @@ export default function HrDashboardPage() {
                   <div className="enterprise-card-header d-flex justify-content-between align-items-center">
                     <span>Recent BP Transactions</span>
                     <Link href="/hr/bp-activity" className="text-decoration-none small">
-                      View All Ledger <i className="bi bi-arrow-right"></i>
+                      View All Ledger <i className="bi bi-arrow-right" aria-hidden="true"></i>
                     </Link>
                   </div>
                   <div className="table-responsive">
                     <table className="enterprise-table">
                       <thead>
                         <tr>
-                          <th>Date / Time</th>
-                          <th>Recipient</th>
-                          <th>Reason / Description</th>
-                          <th>Reference</th>
-                          <th className="text-end">Amount</th>
+                          <th scope="col">Date / Time</th>
+                          <th scope="col">Recipient</th>
+                          <th scope="col">Reason / Description</th>
+                          <th scope="col">Reference</th>
+                          <th scope="col" className="text-end">Amount</th>
                         </tr>
                       </thead>
                       <tbody>

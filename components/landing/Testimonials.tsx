@@ -65,6 +65,7 @@ export default function Testimonials() {
               <div className="testimonial-card">
                 <i
                   className="bi bi-quote"
+                  aria-hidden="true"
                   style={{ fontSize: 24, color: "var(--border)", marginBottom: 12, display: "block", lineHeight: 1 }}
                 />
                 <p style={{ fontSize: 13, color: "var(--text)", lineHeight: 1.7, flex: 1, marginBottom: 20 }}>

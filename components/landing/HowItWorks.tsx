@@ -40,7 +40,7 @@ export default function HowItWorks() {
             <div className="col-md-4" key={s.n}>
               <div className="step-card">
                 <div className="step-number">{s.n}</div>
-                <i className={`bi ${s.icon}`} style={{ fontSize: 24, color: "var(--navy)", marginBottom: 12, display: "block" }} />
+                <i className={`bi ${s.icon}`} aria-hidden="true" style={{ fontSize: 24, color: "var(--navy)", marginBottom: 12, display: "block" }} />
                 <div className="step-title">{s.title}</div>
                 <p className="step-body mb-0">{s.body}</p>
               </div>

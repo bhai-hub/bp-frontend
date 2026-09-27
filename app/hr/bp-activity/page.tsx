@@ -43,7 +43,7 @@ export default function HrBpActivityPage() {
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -52,19 +52,21 @@ export default function HrBpActivityPage() {
             <table className="enterprise-table">
               <thead>
                 <tr>
-                  <th>Timestamp</th>
-                  <th>Transaction Type</th>
-                  <th>Reference Code</th>
-                  <th>Recipient Employee</th>
-                  <th>Recognition Reason</th>
-                  <th className="text-end">Amount</th>
+                  <th scope="col">Timestamp</th>
+                  <th scope="col">Transaction Type</th>
+                  <th scope="col">Reference Code</th>
+                  <th scope="col">Recipient Employee</th>
+                  <th scope="col">Recognition Reason</th>
+                  <th scope="col" className="text-end">Amount</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td colSpan={6} className="text-center py-4">
-                      <div className="spinner-border spinner-border-sm text-primary me-2"></div>
+                      <div className="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span className="visually-hidden">Loading ledger entries...</span>
+                      </div>
                       Loading ledger entries...
                     </td>
                   </tr>

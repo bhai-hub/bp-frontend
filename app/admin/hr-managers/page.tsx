@@ -94,14 +94,14 @@ export default function AdminHrManagersPage() {
 
         {success && (
           <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-check-circle-fill me-2"></i> {success}
-            <button type="button" className="btn-close" onClick={() => setSuccess(null)}></button>
+            <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {success}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setSuccess(null)}></button>
           </div>
         )}
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -110,18 +110,20 @@ export default function AdminHrManagersPage() {
             <table className="enterprise-table">
               <thead>
                 <tr>
-                  <th>HR Manager</th>
-                  <th>Assigned Organization</th>
-                  <th>Role</th>
-                  <th>Status</th>
-                  <th>Provisioned Date</th>
+                  <th scope="col">HR Manager</th>
+                  <th scope="col">Assigned Organization</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Provisioned Date</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td colSpan={5} className="text-center py-4">
-                      <div className="spinner-border spinner-border-sm text-primary me-2"></div>
+                      <div className="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
                       Loading HR Managers...
                     </td>
                   </tr>
@@ -166,25 +168,39 @@ export default function AdminHrManagersPage() {
 
         {/* Create HR Manager Modal */}
         {showModal && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="provision-hr-modal-title"
+          >
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
-                  <h6 className="modal-title fw-bold mb-0">Provision New HR Manager</h6>
-                  <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                  <h6 id="provision-hr-modal-title" className="modal-title fw-bold mb-0">Provision New HR Manager</h6>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close dialog"
+                    onClick={() => setShowModal(false)}
+                  ></button>
                 </div>
                 <form onSubmit={handleCreateHr}>
                   <div className="modal-body p-4">
                     <div className="row g-3">
                       <div className="col-12">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="hr-target-org" className="form-label small fw-semibold text-muted text-uppercase">
                           Target Organization
                         </label>
                         <select
+                          id="hr-target-org"
                           className="form-select"
                           value={formData.organizationId}
                           onChange={(e) => setFormData({ ...formData, organizationId: e.target.value })}
                           required
+                          aria-required="true"
                         >
                           <option value="">Select Organization</option>
                           {organizations.map((org) => (
@@ -196,46 +212,54 @@ export default function AdminHrManagersPage() {
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">First Name</label>
+                        <label htmlFor="hr-first-name" className="form-label small fw-semibold text-muted text-uppercase">First Name</label>
                         <input
+                          id="hr-first-name"
                           type="text"
                           className="form-control"
                           value={formData.firstName}
                           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Last Name</label>
+                        <label htmlFor="hr-last-name" className="form-label small fw-semibold text-muted text-uppercase">Last Name</label>
                         <input
+                          id="hr-last-name"
                           type="text"
                           className="form-control"
                           value={formData.lastName}
                           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-12">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Work Email</label>
+                        <label htmlFor="hr-email" className="form-label small fw-semibold text-muted text-uppercase">Work Email</label>
                         <input
+                          id="hr-email"
                           type="email"
                           className="form-control"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-12">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">Temporary Password</label>
+                        <label htmlFor="hr-temp-password" className="form-label small fw-semibold text-muted text-uppercase">Temporary Password</label>
                         <input
+                          id="hr-temp-password"
                           type="text"
                           className="form-control font-monospace"
                           value={formData.password}
                           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
                     </div>

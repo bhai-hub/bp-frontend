@@ -143,14 +143,14 @@ export default function AdminOrganizationsPage() {
 
         {success && (
           <div className="alert alert-success py-2 px-3 small mb-4 alert-dismissible fade show" role="alert">
-            <i className="bi bi-check-circle-fill me-2"></i> {success}
-            <button type="button" className="btn-close" onClick={() => setSuccess(null)}></button>
+            <i className="bi bi-check-circle-fill me-2" aria-hidden="true"></i> {success}
+            <button type="button" className="btn-close" aria-label="Dismiss alert" onClick={() => setSuccess(null)}></button>
           </div>
         )}
 
         {error && (
           <div className="alert alert-danger py-2 px-3 small mb-4" role="alert">
-            <i className="bi bi-exclamation-triangle-fill me-2"></i> {error}
+            <i className="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i> {error}
           </div>
         )}
 
@@ -159,20 +159,22 @@ export default function AdminOrganizationsPage() {
             <table className="enterprise-table">
               <thead>
                 <tr>
-                  <th>Organization Name</th>
-                  <th>Legal Entity</th>
-                  <th>Country & Jurisdiction</th>
-                  <th>Status</th>
-                  <th>Purchased BP</th>
-                  <th>Available BP</th>
-                  <th className="text-end">Actions</th>
+                  <th scope="col">Organization Name</th>
+                  <th scope="col">Legal Entity</th>
+                  <th scope="col">Country & Jurisdiction</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Purchased BP</th>
+                  <th scope="col">Available BP</th>
+                  <th scope="col" className="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td colSpan={7} className="text-center py-4">
-                      <div className="spinner-border spinner-border-sm text-primary me-2"></div>
+                      <div className="spinner-border spinner-border-sm text-primary me-2" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
                       Loading organizations...
                     </td>
                   </tr>
@@ -212,6 +214,7 @@ export default function AdminOrganizationsPage() {
                           onClick={() => handleToggleStatus(org.id, org.status)}
                           className="btn p-0 border-0"
                           title="Click to toggle status"
+                          aria-label={`Toggle status for ${org.name}, currently ${org.status}`}
                         >
                           <span
                             className={`enterprise-badge enterprise-badge-${
@@ -232,6 +235,7 @@ export default function AdminOrganizationsPage() {
                         <Link
                           href={`/admin/organizations/${org.id}`}
                           className="btn btn-sm btn-outline-primary"
+                          aria-label={`Manage organization ${org.name}`}
                         >
                           Manage
                         </Link>
@@ -246,14 +250,22 @@ export default function AdminOrganizationsPage() {
 
         {/* Create Organization Modal */}
         {showCreateModal && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} tabIndex={-1}>
+          <div
+            className="modal show d-block"
+            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="create-org-modal-title"
+          >
             <div className="modal-dialog modal-dialog-centered modal-lg">
               <div className="modal-content enterprise-card">
                 <div className="modal-header enterprise-card-header">
-                  <h6 className="modal-title fw-bold mb-0">Register New Enterprise Organization</h6>
+                  <h6 id="create-org-modal-title" className="modal-title fw-bold mb-0">Register New Enterprise Organization</h6>
                   <button
                     type="button"
                     className="btn-close"
+                    aria-label="Close dialog"
                     onClick={() => setShowCreateModal(false)}
                   ></button>
                 </div>
@@ -261,39 +273,44 @@ export default function AdminOrganizationsPage() {
                   <div className="modal-body p-4">
                     <div className="row g-3">
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="create-org-name" className="form-label small fw-semibold text-muted text-uppercase">
                           Organization Name *
                         </label>
                         <input
+                          id="create-org-name"
                           type="text"
                           className="form-control"
                           placeholder="e.g. Acme Technologies"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="create-org-legal-name" className="form-label small fw-semibold text-muted text-uppercase">
                           Legal Entity Name *
                         </label>
                         <input
+                          id="create-org-legal-name"
                           type="text"
                           className="form-control"
                           placeholder="e.g. Acme Technologies Inc."
                           value={formData.legalName}
                           onChange={(e) => setFormData({ ...formData, legalName: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       {/* Country Selection (Mandatory) */}
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="create-org-country" className="form-label small fw-semibold text-muted text-uppercase">
                           Operating Country *
                         </label>
                         <select
+                          id="create-org-country"
                           className="form-select"
                           value={formData.countryCode}
                           onChange={(e) => {
@@ -305,6 +322,7 @@ export default function AdminOrganizationsPage() {
                             });
                           }}
                           required
+                          aria-required="true"
                         >
                           {countries.map((c) => (
                             <option key={c.code} value={c.code}>
@@ -318,10 +336,11 @@ export default function AdminOrganizationsPage() {
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="create-org-currency" className="form-label small fw-semibold text-muted text-uppercase">
                           Accounting Currency
                         </label>
                         <input
+                          id="create-org-currency"
                           type="text"
                           className="form-control"
                           value={formData.currency}
@@ -331,30 +350,34 @@ export default function AdminOrganizationsPage() {
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="create-org-email" className="form-label small fw-semibold text-muted text-uppercase">
                           Contact Email *
                         </label>
                         <input
+                          id="create-org-email"
                           type="email"
                           className="form-control"
                           placeholder="admin@company.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label small fw-semibold text-muted text-uppercase">
+                        <label htmlFor="create-org-phone" className="form-label small fw-semibold text-muted text-uppercase">
                           Phone *
                         </label>
                         <input
+                          id="create-org-phone"
                           type="text"
                           className="form-control"
                           placeholder="+1 555 0123"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           required
+                          aria-required="true"
                         />
                       </div>
 

@@ -162,21 +162,26 @@ export default function OnboardingIkigaiPage() {
   }
 
   return (
-    <div className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
+    <main id="main-content" tabIndex={-1} className="min-vh-100 py-5" style={{ backgroundColor: '#f8fafc' }}>
       <div className="container" style={{ maxWidth: '900px' }}>
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div className="d-flex align-items-center gap-2">
-            <div className="p-2 bg-primary text-white rounded">
+            <div className="p-2 bg-primary text-white rounded" aria-hidden="true">
               <i className="bi bi-award-fill fs-5"></i>
             </div>
             <div>
-              <h5 className="fw-bold text-dark mb-0">Brownie Points</h5>
+              <h1 className="fw-bold text-dark mb-0 fs-5">Brownie Points</h1>
               <span className="text-muted small">Employee Onboarding</span>
             </div>
           </div>
-          <button onClick={logout} className="btn btn-outline-secondary btn-sm">
-            <i className="bi bi-box-arrow-right me-1"></i> Sign Out
+          <button
+            type="button"
+            onClick={logout}
+            className="btn btn-outline-secondary btn-sm"
+            aria-label="Sign out of onboarding session"
+          >
+            <i className="bi bi-box-arrow-right me-1" aria-hidden="true"></i> Sign Out
           </button>
         </div>
 
@@ -239,26 +244,30 @@ export default function OnboardingIkigaiPage() {
                   <div className="row g-4">
                     {dimQuestions.map((q, idx) => (
                       <div key={q.id} className="col-12">
-                        <label className="form-label small fw-semibold text-dark mb-1">
+                        <label htmlFor={`ikigai-q-${q.id}`} className="form-label small fw-semibold text-dark mb-1">
                           {idx + 1}. {q.questionText}
-                          {q.isRequired && <span className="text-danger ms-1">*</span>}
+                          {q.isRequired && <span className="text-danger ms-1" aria-hidden="true">*</span>}
                         </label>
 
                         {q.questionType === 'LONG_TEXT' ? (
                           <textarea
+                            id={`ikigai-q-${q.id}`}
                             className="form-control"
                             rows={3}
                             placeholder="Share your personal reflections here..."
                             value={answers[q.id] || ''}
                             onChange={(e) => handleInputChange(q.id, e.target.value)}
                             required={q.isRequired}
+                            aria-required={q.isRequired}
                           />
                         ) : q.questionType === 'SINGLE_SELECT' && q.options && Array.isArray(q.options) ? (
                           <select
+                            id={`ikigai-q-${q.id}`}
                             className="form-select"
                             value={answers[q.id] || ''}
                             onChange={(e) => handleInputChange(q.id, e.target.value)}
                             required={q.isRequired}
+                            aria-required={q.isRequired}
                           >
                             <option value="">-- Select an option --</option>
                             {q.options.map((opt: string) => (
@@ -269,12 +278,14 @@ export default function OnboardingIkigaiPage() {
                           </select>
                         ) : (
                           <input
+                            id={`ikigai-q-${q.id}`}
                             type="text"
                             className="form-control"
                             placeholder="Your reflection..."
                             value={answers[q.id] || ''}
                             onChange={(e) => handleInputChange(q.id, e.target.value)}
                             required={q.isRequired}
+                            aria-required={q.isRequired}
                           />
                         )}
                       </div>
@@ -293,18 +304,18 @@ export default function OnboardingIkigaiPage() {
             <button type="submit" className="btn btn-primary" disabled={submitting}>
               {submitting ? (
                 <>
-                  <span className="spinner-border spinner-border-sm me-2"></span>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                   Submitting Reflections...
                 </>
               ) : (
                 <>
-                  Complete Onboarding <i className="bi bi-check-circle-fill ms-1"></i>
+                  Complete Onboarding <i className="bi bi-check-circle-fill ms-1" aria-hidden="true"></i>
                 </>
               )}
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 }

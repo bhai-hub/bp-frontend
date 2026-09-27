@@ -105,12 +105,12 @@ export default function ContactPage() {
     <div className="d-flex flex-column min-vh-100 bg-white">
       <Navbar />
 
-      <main className="flex-grow-1">
+      <main id="main-content" tabIndex={-1} className="flex-grow-1">
         {submitted ? (
           <div className="contact-page">
             <div className="container">
-              <div className="contact-success">
-                <div className="contact-success__icon">
+              <div className="contact-success" role="status" aria-live="polite">
+                <div className="contact-success__icon" aria-hidden="true">
                   <i className="bi bi-check-lg" />
                 </div>
                 <h1 className="contact-success__title">Request Received</h1>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                 </p>
                 <div className="d-flex gap-3 justify-content-center flex-wrap">
                   <Link href="/" className="btn btn-primary-cta">
-                    <i className="bi bi-arrow-left me-2" />
+                    <i className="bi bi-arrow-left me-2" aria-hidden="true" />
                     Back to Home
                   </Link>
                   <button
@@ -143,11 +143,11 @@ export default function ContactPage() {
             <div className="contact-hero">
               <div className="container">
                 <div className="d-flex align-items-center gap-2 mb-3">
-                  <Link href="/" className="contact-breadcrumb">
-                    <i className="bi bi-house me-1" />Home
+                  <Link href="/" className="contact-breadcrumb" aria-label="Return to Homepage">
+                    <i className="bi bi-house me-1" aria-hidden="true" />Home
                   </Link>
-                  <span className="contact-breadcrumb-sep">/</span>
-                  <span className="contact-breadcrumb contact-breadcrumb--active">Contact Us</span>
+                  <span className="contact-breadcrumb-sep" aria-hidden="true">/</span>
+                  <span className="contact-breadcrumb contact-breadcrumb--active" aria-current="page">Contact Us</span>
                 </div>
                 <span className="hero-eyebrow">Get in Touch</span>
                 <h1 className="contact-page-title">Request a Demo</h1>
@@ -165,33 +165,62 @@ export default function ContactPage() {
                     <form onSubmit={handleSubmit} noValidate>
                       {/* Organisation */}
                       <div className="contact-field">
-                        <label className="contact-label">Organisation Name</label>
+                        <label htmlFor="contact-orgName" className="contact-label">
+                          Organisation Name <span className="text-danger" aria-hidden="true">*</span>
+                        </label>
                         <input
+                          id="contact-orgName"
                           type="text"
                           className={inputCls('orgName')}
                           placeholder="Acme Corporation"
                           value={form.orgName}
                           onChange={set('orgName')}
+                          required
+                          aria-required="true"
+                          aria-invalid={!!errors.orgName}
+                          aria-describedby={errors.orgName ? 'err-orgName' : undefined}
                         />
-                        {errors.orgName && <div className="contact-error">{errors.orgName}</div>}
+                        {errors.orgName && (
+                          <div id="err-orgName" className="contact-error" role="alert">
+                            {errors.orgName}
+                          </div>
+                        )}
                       </div>
 
                       {/* Contact person */}
                       <div className="contact-field">
-                        <label className="contact-label">Contact Person</label>
+                        <span className="contact-label d-block">
+                          Contact Person <span className="text-danger" aria-hidden="true">*</span>
+                        </span>
                         <div className="row g-2">
                           <div className="col-12 col-sm-4">
+                            <label htmlFor="contact-firstName" className="visually-hidden">
+                              First Name
+                            </label>
                             <input
+                              id="contact-firstName"
                               type="text"
                               className={inputCls('firstName')}
                               placeholder="First name"
                               value={form.firstName}
                               onChange={set('firstName')}
+                              required
+                              aria-required="true"
+                              aria-invalid={!!errors.firstName}
+                              aria-describedby={errors.firstName ? 'err-firstName' : undefined}
                             />
-                            {errors.firstName && <div className="contact-error">{errors.firstName}</div>}
+                            {errors.firstName && (
+                              <div id="err-firstName" className="contact-error" role="alert">
+                                {errors.firstName}
+                              </div>
+                            )}
                           </div>
                           <div className="col-12 col-sm-4">
+                            <label htmlFor="contact-middleName" className="visually-hidden">
+                              Middle Name (optional)
+                            </label>
                             <input
+                              id="contact-middleName"
                               type="text"
                               className="contact-input"
                               placeholder="Middle name (optional)"
@@ -200,26 +229,45 @@ export default function ContactPage() {
                             />
                           </div>
                           <div className="col-12 col-sm-4">
+                            <label htmlFor="contact-lastName" className="visually-hidden">
+                              Last Name
+                            </label>
                             <input
+                              id="contact-lastName"
                               type="text"
                               className={inputCls('lastName')}
                               placeholder="Last name"
                               value={form.lastName}
                               onChange={set('lastName')}
+                              required
+                              aria-required="true"
+                              aria-invalid={!!errors.lastName}
+                              aria-describedby={errors.lastName ? 'err-lastName' : undefined}
                             />
-                            {errors.lastName && <div className="contact-error">{errors.lastName}</div>}
+                            {errors.lastName && (
+                              <div id="err-lastName" className="contact-error" role="alert">
+                                {errors.lastName}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
 
                       {/* Phone */}
                       <div className="contact-field">
-                        <label className="contact-label">Phone Number</label>
+                        <label htmlFor="contact-phone" className="contact-label">
+                          Phone Number <span className="text-danger" aria-hidden="true">*</span>
+                        </label>
                         <div className="contact-phone-row">
+                          <label htmlFor="contact-country-code" className="visually-hidden">
+                            Country Calling Code
+                          </label>
                           <select
+                            id="contact-country-code"
                             className="contact-country-select"
                             value={form.countryCode}
                             onChange={set('countryCode')}
+                            aria-label="Country calling code"
                           >
                             {countryCodes.map((c) => (
                               <option key={`${c.code}-${c.name}`} value={c.code}>
@@ -228,36 +276,57 @@ export default function ContactPage() {
                             ))}
                           </select>
                           <input
+                            id="contact-phone"
                             type="tel"
                             className={inputCls('phone') + ' contact-phone-input'}
                             placeholder="7911 123456"
                             value={form.phone}
                             onChange={set('phone')}
+                            required
+                            aria-required="true"
+                            aria-invalid={!!errors.phone}
+                            aria-describedby={errors.phone ? 'err-phone' : undefined}
                           />
                         </div>
-                        {errors.phone && <div className="contact-error">{errors.phone}</div>}
+                        {errors.phone && (
+                          <div id="err-phone" className="contact-error" role="alert">
+                            {errors.phone}
+                          </div>
+                        )}
                       </div>
 
                       {/* Email */}
                       <div className="contact-field">
-                        <label className="contact-label">Email Address</label>
+                        <label htmlFor="contact-email" className="contact-label">
+                          Email Address <span className="text-danger" aria-hidden="true">*</span>
+                        </label>
                         <input
+                          id="contact-email"
                           type="email"
                           className={inputCls('email')}
                           placeholder="you@company.com"
                           value={form.email}
                           onChange={set('email')}
+                          required
+                          aria-required="true"
+                          aria-invalid={!!errors.email}
+                          aria-describedby={errors.email ? 'err-email' : undefined}
                         />
-                        {errors.email && <div className="contact-error">{errors.email}</div>}
+                        {errors.email && (
+                          <div id="err-email" className="contact-error" role="alert">
+                            {errors.email}
+                          </div>
+                        )}
                       </div>
 
                       {/* Note */}
                       <div className="contact-field">
-                        <label className="contact-label">
+                        <label htmlFor="contact-note" className="contact-label">
                           Note{' '}
                           <span className="contact-label-optional">(optional)</span>
                         </label>
                         <textarea
+                          id="contact-note"
                           className="contact-input"
                           rows={4}
                           placeholder="Tell us about your team size, current recognition approach, or anything you'd like us to know before the demo…"

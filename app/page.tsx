@@ -20,7 +20,7 @@ export default function LandingPage() {
   return (
     <div className="d-flex flex-column min-vh-100 bg-white">
       <Navbar />
-      <main className="flex-grow-1">
+      <main id="main-content" tabIndex={-1} className="flex-grow-1">
         <Hero />
         <HowItWorks />
         <Features />

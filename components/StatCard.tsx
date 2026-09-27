@@ -22,7 +22,7 @@ export const StatCard: React.FC<StatCardProps> = ({
     <div className="metric-box h-100 d-flex flex-column justify-content-between">
       <div className="d-flex justify-content-between align-items-start mb-2">
         <span className="metric-label">{label}</span>
-        {icon && <i className={`bi ${icon} text-muted fs-5`}></i>}
+        {icon && <i className={`bi ${icon} text-muted fs-5`} aria-hidden="true"></i>}
       </div>
 
       <div>

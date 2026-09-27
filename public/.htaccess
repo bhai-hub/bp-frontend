@@ -1,0 +1,108 @@
+# ==============================================================================
+# Brownie Points Frontend - Hostinger Shared Hosting Apache Configuration
+# Target Directory: public_html/
+# ==============================================================================
+
+# 1. Directory Index
+DirectoryIndex index.html
+
+# 2. Options
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
+
+# 3. Security: Block hidden files and sensitive extensions
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+<FilesMatch "(^#.*#|\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+  Require all denied
+</FilesMatch>
+
+# 4. MIME Types
+<IfModule mod_mime.c>
+  AddType text/html .html
+  AddType text/css .css
+  AddType application/javascript .js .mjs
+  AddType application/json .json
+  AddType image/svg+xml .svg .svgz
+  AddType font/woff2 .woff2
+  AddType font/woff .woff
+  AddType font/ttf .ttf
+  AddType font/eot .eot
+</IfModule>
+
+# 5. Gzip Compression (Speed & Performance)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# 6. Caching & Security Headers
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2|woff|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 7. Routing & Dynamic Route Rewrites
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Serve existing real files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # --------------------------------------------------------------------------
+  # Dynamic Routes Handling
+  # Allows direct access and page refresh for dynamic URLs on static hosting
+  # --------------------------------------------------------------------------
+
+  # Dynamic route: /admin/organizations/:id -> fallback to default/index.html
+  RewriteRule ^admin/organizations/([^/]+)/?$ admin/organizations/default/index.html [L]
+
+  # Dynamic route: /admin/policies/:countryCode (if pre-rendered country does not exist)
+  RewriteCond %{DOCUMENT_ROOT}/admin/policies/$1/index.html !-f
+  RewriteRule ^admin/policies/([^/]+)/?$ admin/policies/default/index.html [L]
+
+  # Dynamic route: /onboarding/invitation/:token -> fallback to default/index.html
+  RewriteRule ^onboarding/invitation/([^/]+)/?$ onboarding/invitation/default/index.html [L]
+
+  # --------------------------------------------------------------------------
+  # Clean URL routing for static directories with index.html
+  # e.g., /login -> /login/index.html, /employee/profile -> /employee/profile/index.html
+  # --------------------------------------------------------------------------
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.*)/?$ $1/index.html [L]
+
+  # --------------------------------------------------------------------------
+  # Fallback for remaining routes without trailing slash
+  # --------------------------------------------------------------------------
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  # --------------------------------------------------------------------------
+  # Global 404 Error Document
+  # --------------------------------------------------------------------------
+  ErrorDocument 404 /404/index.html
+</IfModule>

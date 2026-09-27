@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
+import { useAccessibility } from '../context/AccessibilityContext';
 import { RoleType } from '../types';
 
 interface NavItem {
@@ -20,6 +21,7 @@ interface DashboardLayoutProps {
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, allowedRoles }) => {
   const { user, logout } = useAuth();
   const pathname = usePathname();
+  const { setIsToolbarOpen } = useAccessibility();
 
   const getNavItems = (): NavItem[] => {
     if (!user) return [];
@@ -63,21 +65,21 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, allo
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
-      <aside className="dashboard-sidebar">
+      <aside className="dashboard-sidebar" aria-label="Sidebar navigation">
         <div className="p-3 border-bottom d-flex align-items-center gap-2">
-          <div className="brand-icon-box">
+          <div className="brand-icon-box" aria-hidden="true">
             BP
           </div>
           <div>
             <div className="fw-bold fs-6 text-dark lh-1">Brownie Points</div>
-            <div className="text-muted small" style={{ fontSize: '0.72rem' }}>
+            <div className="text-muted small" style={{ fontSize: '0.75rem' }}>
               {getPortalTitle()}
             </div>
           </div>
         </div>
 
         {/* Navigation links */}
-        <nav className="py-3 flex-grow-1">
+        <nav className="py-3 flex-grow-1" aria-label="Portal Navigation">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -85,8 +87,9 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, allo
                 key={item.href}
                 href={item.href}
                 className={`sidebar-nav-item ${isActive ? 'active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
               >
-                <i className={`bi ${item.icon} fs-5`}></i>
+                <i className={`bi ${item.icon} fs-5`} aria-hidden="true"></i>
                 <span>{item.label}</span>
               </Link>
             );
@@ -100,16 +103,19 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, allo
               <div className="fw-semibold text-dark text-truncate small">
                 {user?.firstName} {user?.lastName}
               </div>
-              <div className="text-muted small text-truncate" style={{ fontSize: '0.72rem' }}>
+              <div className="text-muted small text-truncate" style={{ fontSize: '0.75rem' }}>
                 {user?.email}
               </div>
             </div>
             <button
+              type="button"
               onClick={logout}
               className="btn btn-sm btn-outline-danger p-1 px-2"
               title="Sign Out"
+              aria-label="Sign out of portal"
             >
-              <i className="bi bi-box-arrow-right"></i>
+              <i className="bi bi-box-arrow-right" aria-hidden="true"></i>
+              <span className="visually-hidden">Sign Out</span>
             </button>
           </div>
         </div>
@@ -118,7 +124,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, allo
       {/* Main Area */}
       <div className="dashboard-main">
         {/* Topbar */}
-        <header className="dashboard-topbar">
+        <header className="dashboard-topbar" role="banner">
           <div className="d-flex align-items-center gap-3">
             <span className="fw-semibold text-secondary small text-uppercase letter-spacing">
               {user?.organization ? user.organization.name : 'System Platform'}
@@ -130,23 +136,45 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, allo
             )}
           </div>
 
-          <div className="d-flex align-items-center gap-3">
-            <Link href="/" className="btn btn-sm btn-outline-secondary" target="_blank">
-              <i className="bi bi-globe me-1"></i> Public Site
+          <div className="d-flex align-items-center gap-2">
+            {/* Quick Accessibility Options Trigger */}
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1"
+              onClick={() => setIsToolbarOpen(true)}
+              aria-label="Accessibility options and settings"
+              title="Accessibility options (High contrast, text size, reduced motion)"
+            >
+              <i className="bi bi-universal-access" aria-hidden="true"></i>
+              <span className="d-none d-sm-inline">Accessibility</span>
+            </button>
+
+            <Link
+              href="/"
+              className="btn btn-sm btn-outline-secondary"
+              target="_blank"
+              aria-label="Public Site (opens in a new tab)"
+            >
+              <i className="bi bi-globe me-1" aria-hidden="true"></i>
+              <span className="d-none d-sm-inline">Public Site</span>
             </Link>
             <a
               href="http://localhost:5000/api/docs"
               target="_blank"
               rel="noreferrer"
               className="btn btn-sm btn-outline-secondary"
+              aria-label="Swagger REST API Documentation (opens in a new tab)"
             >
-              <i className="bi bi-code-slash me-1"></i> Swagger API
+              <i className="bi bi-code-slash me-1" aria-hidden="true"></i>
+              <span className="d-none d-sm-inline">Swagger API</span>
             </a>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="dashboard-content">{children}</main>
+        {/* Page Content Landmark with ID for SkipLink */}
+        <main id="main-content" tabIndex={-1} className="dashboard-content">
+          {children}
+        </main>
       </div>
     </div>
   );

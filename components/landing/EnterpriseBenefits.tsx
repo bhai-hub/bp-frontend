@@ -61,16 +61,17 @@ export default function EnterpriseBenefits() {
             <span
               key={tag}
               style={{
-                background: "#fff",
-                border: "1px solid var(--border)",
-                borderRadius: 4,
-                padding: "6px 14px",
-                fontSize: 12,
-                fontWeight: 600,
-                color: "var(--navy)",
+                background: "#ffffff",
+                border: "1px solid var(--orange-border)",
+                borderRadius: 20,
+                padding: "8px 18px",
+                fontSize: 12.5,
+                fontWeight: 700,
+                color: "var(--orange-primary)",
+                boxShadow: "0 2px 10px rgba(255, 107, 0, 0.06)",
               }}
             >
-              <i className="bi bi-check-circle-fill me-2" aria-hidden="true" style={{ color: "var(--green)", fontSize: 11 }} />
+              <i className="bi bi-check-circle-fill me-2" aria-hidden="true" style={{ color: "var(--orange-primary)", fontSize: 12 }} />
               {tag}
             </span>
           ))}

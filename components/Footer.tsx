@@ -77,9 +77,9 @@ export const Footer: React.FC<Props> = ({ onOpenTerms, onOpenPrivacy }) => {
                   style={{
                     width: 34,
                     height: 34,
-                    borderRadius: 4,
-                    background: 'rgba(255,255,255,0.15)',
-                    border: '1px solid rgba(255,255,255,0.3)',
+                    borderRadius: 8,
+                    background: 'rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(255,255,255,0.2)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -97,9 +97,9 @@ export const Footer: React.FC<Props> = ({ onOpenTerms, onOpenPrivacy }) => {
 
           {sitemap.map((col) => (
             <div className="col-6 col-md-3 col-lg-2" key={col.heading}>
-              <div className="footer-heading text-white fw-bold">{col.heading}</div>
+              <div className="footer-heading">{col.heading}</div>
               {col.links.map((link) => (
-                <Link key={link.label} href={link.href} className="footer-link d-block mb-1 text-white" style={{ opacity: 0.85 }}>
+                <Link key={link.label} href={link.href} className="footer-link">
                   {link.label}
                 </Link>
               ))}
@@ -108,14 +108,14 @@ export const Footer: React.FC<Props> = ({ onOpenTerms, onOpenPrivacy }) => {
         </div>
 
         {/* Sitemap label */}
-        <div style={{ marginTop: 32, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+        <div style={{ marginTop: 32, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div
             style={{
               fontSize: 11,
-              fontWeight: 700,
+              fontWeight: 800,
               textTransform: 'uppercase',
               letterSpacing: 0.8,
-              color: '#cbd5e1',
+              color: 'var(--orange-primary)',
               marginBottom: 10,
             }}
           >
@@ -137,9 +137,10 @@ export const Footer: React.FC<Props> = ({ onOpenTerms, onOpenPrivacy }) => {
                 href={page.href}
                 style={{
                   fontSize: 12,
-                  color: '#e2e8f0',
+                  color: 'rgba(255,255,255,0.6)',
                   textDecoration: 'none',
-                  marginRight: 14,
+                  marginRight: 16,
+                  transition: 'color 0.15s ease',
                 }}
               >
                 {page.label}

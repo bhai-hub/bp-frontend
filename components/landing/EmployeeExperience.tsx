@@ -80,23 +80,24 @@ export default function EmployeeExperience() {
             {/* Mini activity feed */}
             <div
               style={{
-                background: "var(--bg)",
-                border: "1px solid var(--border)",
-                borderRadius: 5,
-                marginTop: 20,
+                background: "#ffffff",
+                border: "1px solid var(--orange-border)",
+                borderRadius: 12,
+                marginTop: 24,
                 overflow: "hidden",
+                boxShadow: "0 4px 20px rgba(255, 107, 0, 0.04)",
               }}
             >
               <div
                 style={{
-                  padding: "10px 16px",
-                  background: "#fff",
-                  borderBottom: "1px solid var(--border)",
+                  padding: "12px 20px",
+                  background: "var(--orange-light)",
+                  borderBottom: "1px solid var(--orange-border)",
                   fontSize: 11,
-                  fontWeight: 700,
+                  fontWeight: 800,
                   textTransform: "uppercase",
-                  letterSpacing: 0.6,
-                  color: "var(--muted)",
+                  letterSpacing: 0.8,
+                  color: "var(--orange-primary)",
                 }}
               >
                 Recent Activity
@@ -112,30 +113,30 @@ export default function EmployeeExperience() {
                     display: "flex",
                     alignItems: "center",
                     gap: 14,
-                    padding: "10px 16px",
-                    borderBottom: i < 2 ? "1px solid var(--border)" : "none",
+                    padding: "12px 20px",
+                    borderBottom: i < 2 ? "1px solid var(--orange-border)" : "none",
                     background: "#fff",
                   }}
                 >
                   <span
                     style={{
-                      background: "rgba(26,92,56,0.1)",
-                      color: "var(--green)",
+                      background: "var(--orange-light)",
+                      color: "var(--orange-primary)",
                       fontWeight: 800,
                       fontSize: 12,
-                      padding: "3px 9px",
-                      borderRadius: 3,
-                      border: "1px solid rgba(26,92,56,0.2)",
+                      padding: "4px 10px",
+                      borderRadius: 6,
+                      border: "1px solid var(--orange-border)",
                       flexShrink: 0,
                     }}
                   >
                     {row.pts} BP
                   </span>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text)" }}>{row.label}</div>
-                    <div style={{ fontSize: 11, color: "var(--muted)" }}>{row.from}</div>
+                    <div style={{ fontSize: 13.5, fontWeight: 700, color: "var(--text-dark)" }}>{row.label}</div>
+                    <div style={{ fontSize: 11.5, color: "var(--muted)" }}>{row.from}</div>
                   </div>
-                  <span className="d-none d-sm-inline" style={{ fontSize: 11, color: "var(--muted)", flexShrink: 0 }}>{row.time}</span>
+                  <span className="d-none d-sm-inline" style={{ fontSize: 11.5, color: "var(--muted)", flexShrink: 0 }}>{row.time}</span>
                 </div>
               ))}
             </div>

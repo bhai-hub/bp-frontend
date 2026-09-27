@@ -46,22 +46,23 @@ export default function Hero() {
           <div className="col-lg-6">
             <div
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 5,
+                background: "#ffffff",
+                border: "1px solid var(--orange-border)",
+                borderRadius: 12,
                 overflow: "hidden",
+                boxShadow: "0 12px 32px rgba(255, 107, 0, 0.08)",
               }}
             >
               <div
                 style={{
-                  background: "rgba(255,255,255,0.06)",
-                  borderBottom: "1px solid rgba(255,255,255,0.1)",
-                  padding: "12px 18px",
+                  background: "var(--orange-light)",
+                  borderBottom: "1px solid var(--orange-border)",
+                  padding: "14px 20px",
                   fontSize: 11,
-                  fontWeight: 700,
+                  fontWeight: 800,
                   textTransform: "uppercase" as const,
-                  letterSpacing: 0.7,
-                  color: "rgba(255,255,255,0.75)",
+                  letterSpacing: 0.8,
+                  color: "var(--orange-primary)",
                 }}
               >
                 Recognition Categories
@@ -73,43 +74,44 @@ export default function Hero() {
                     display: "flex",
                     alignItems: "flex-start",
                     gap: 14,
-                    padding: "14px 18px",
-                    borderBottom: i < awards.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                    padding: "16px 20px",
+                    borderBottom: i < awards.length - 1 ? "1px solid var(--orange-border)" : "none",
                   }}
                 >
                   <div
                     style={{
-                      width: 34,
-                      height: 34,
-                      borderRadius: 4,
-                      background: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(255,255,255,0.14)",
+                      width: 36,
+                      height: 36,
+                      borderRadius: 8,
+                      background: "var(--orange-light)",
+                      border: "1px solid var(--orange-border)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      color: "rgba(255,255,255,0.85)",
-                      fontSize: 15,
+                      color: "var(--orange-primary)",
+                      fontSize: 16,
                     }}
                   >
                     <i className={`bi ${a.icon}`} aria-hidden="true" />
                   </div>
                   <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 3 }}>{a.label}</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>{a.desc}</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-dark)", marginBottom: 3 }}>{a.label}</div>
+                    <div style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.55 }}>{a.desc}</div>
                   </div>
                 </div>
               ))}
               <div
                 style={{
-                  padding: "12px 18px",
-                  borderTop: "1px solid rgba(255,255,255,0.08)",
-                  background: "rgba(255,255,255,0.04)",
-                  fontSize: 12,
-                  color: "rgba(255,255,255,0.8)",
+                  padding: "14px 20px",
+                  borderTop: "1px solid var(--orange-border)",
+                  background: "var(--orange-light)",
+                  fontSize: 12.5,
+                  fontWeight: 500,
+                  color: "var(--muted)",
                 }}
               >
-                <i className="bi bi-info-circle me-2" aria-hidden="true" style={{ color: "var(--amber)" }} />
+                <i className="bi bi-info-circle me-2" aria-hidden="true" style={{ color: "var(--orange-primary)" }} />
                 No rankings. No competition. Points reflect contribution only.
               </div>
             </div>

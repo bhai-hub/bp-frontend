@@ -66,25 +66,26 @@ export default function Testimonials() {
                 <i
                   className="bi bi-quote"
                   aria-hidden="true"
-                  style={{ fontSize: 24, color: "var(--border)", marginBottom: 12, display: "block", lineHeight: 1 }}
+                  style={{ fontSize: 28, color: "var(--orange-primary)", opacity: 0.6, marginBottom: 12, display: "block", lineHeight: 1 }}
                 />
-                <p style={{ fontSize: 13, color: "var(--text)", lineHeight: 1.7, flex: 1, marginBottom: 20 }}>
+                <p style={{ fontSize: 13.5, color: "var(--text-dark)", lineHeight: 1.7, flex: 1, marginBottom: 20 }}>
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div
                     style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 4,
-                      background: "var(--navy)",
+                      width: 38,
+                      height: 38,
+                      borderRadius: 8,
+                      background: "linear-gradient(135deg, #FF6B00 0%, #FF8533 100%)",
                       color: "#fff",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: 12,
-                      fontWeight: 700,
+                      fontSize: 12.5,
+                      fontWeight: 800,
                       flexShrink: 0,
+                      boxShadow: "0 3px 10px rgba(255, 107, 0, 0.25)",
                     }}
                   >
                     {t.initials}

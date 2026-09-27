@@ -40,13 +40,15 @@ export default function CTA() {
           <div className="col-lg-5">
             <div
               style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: 5,
-                padding: "26px 28px",
+                background: "rgba(255, 255, 255, 0.12)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid rgba(255, 255, 255, 0.25)",
+                borderRadius: 12,
+                padding: "28px 30px",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: 0.7, color: "rgba(255,255,255,0.75)", marginBottom: 18 }}>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase" as const, letterSpacing: 0.8, color: "#ffffff", marginBottom: 18 }}>
                 Why Organisations Choose Us
               </div>
               {[
@@ -63,13 +65,14 @@ export default function CTA() {
                     display: "flex",
                     alignItems: "center",
                     gap: 10,
-                    padding: "9px 0",
-                    borderBottom: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                    fontSize: 13,
-                    color: "rgba(255,255,255,0.85)",
+                    padding: "10px 0",
+                    borderBottom: i < arr.length - 1 ? "1px solid rgba(255, 255, 255, 0.15)" : "none",
+                    fontSize: 13.5,
+                    color: "#ffffff",
+                    fontWeight: 500,
                   }}
                 >
-                  <i className="bi bi-check-circle" aria-hidden="true" style={{ color: "#5ECF8A", flexShrink: 0, fontSize: 14 }} />
+                  <i className="bi bi-check-circle-fill" aria-hidden="true" style={{ color: "#ffffff", flexShrink: 0, fontSize: 15 }} />
                   {item}
                 </div>
               ))}

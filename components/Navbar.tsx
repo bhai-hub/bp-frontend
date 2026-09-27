@@ -45,7 +45,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Accessibility Button */}
           <button
             type="button"
-            className="btn btn-sm btn-outline-light d-flex align-items-center justify-content-center p-2"
+            className="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center p-2"
             onClick={() => setIsToolbarOpen(true)}
             aria-label="Open accessibility options"
             style={{ width: 38, height: 38 }}
@@ -55,13 +55,13 @@ export const Navbar: React.FC = () => {
 
           <button
             type="button"
-            className="navbar-toggler border-0 text-white"
+            className="navbar-toggler border-0"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={menuOpen}
             aria-controls="main-navbar-content"
           >
-            <i className={`bi ${menuOpen ? 'bi-x-lg' : 'bi-list'}`} aria-hidden="true" style={{ fontSize: 22 }} />
+            <i className={`bi ${menuOpen ? 'bi-x-lg' : 'bi-list'}`} aria-hidden="true" style={{ fontSize: 24, color: 'var(--orange-primary)' }} />
           </button>
         </div>
 
@@ -70,7 +70,7 @@ export const Navbar: React.FC = () => {
             {navLinks.map((item) => (
               <li className="nav-item" key={item.label}>
                 <Link
-                  className="nav-link text-white"
+                  className="nav-link"
                   href={item.href}
                   onClick={closeMenu}
                 >
@@ -84,15 +84,17 @@ export const Navbar: React.FC = () => {
             {/* Desktop Accessibility Toggle */}
             <button
               type="button"
-              className="btn btn-sm text-white d-none d-lg-inline-flex align-items-center gap-1 me-2"
+              className="btn btn-sm d-none d-lg-inline-flex align-items-center gap-1 me-2"
               onClick={() => setIsToolbarOpen(true)}
               aria-label="Accessibility settings (WCAG AA)"
               style={{
-                background: 'rgba(255,255,255,0.15)',
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: 4,
-                padding: '6px 10px',
+                background: 'var(--orange-light)',
+                border: '1px solid var(--orange-border)',
+                color: 'var(--orange-primary)',
+                borderRadius: 6,
+                padding: '6px 12px',
                 fontSize: 13,
+                fontWeight: 600,
               }}
               title="Accessibility options (High contrast, text size, reduced motion)"
             >
@@ -102,18 +104,12 @@ export const Navbar: React.FC = () => {
 
             {user ? (
               <div className="d-flex align-items-center gap-2 flex-wrap">
-                <span className="text-white small me-1 fw-medium" style={{ opacity: 0.9 }}>
+                <span className="text-muted small me-1 fw-semibold">
                   {user.firstName} ({user.role})
                 </span>
                 <Link
                   href={getDashboardLink()}
-                  className="btn btn-sm"
-                  style={{
-                    background: 'rgba(255,255,255,0.18)',
-                    color: '#fff',
-                    border: '1px solid rgba(255,255,255,0.35)',
-                    borderRadius: 4,
-                  }}
+                  className="btn btn-sm btn-outline-primary"
                   onClick={closeMenu}
                 >
                   <i className="bi bi-grid-fill me-1" aria-hidden="true"></i> Dashboard
@@ -124,12 +120,7 @@ export const Navbar: React.FC = () => {
                     logout();
                     closeMenu();
                   }}
-                  className="btn btn-sm text-white"
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(255,255,255,0.25)',
-                    borderRadius: 4,
-                  }}
+                  className="btn btn-sm btn-ghost-outline"
                   aria-label="Sign out of your account"
                 >
                   Sign Out
